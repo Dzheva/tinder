@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "https://www.hibernate.org/dtd/hibernate-configuration">
+<hibernate-configuration>
+
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+        <property name="hibernate.connection.url">jdbc:sqlite:src/main/resources/application.db</property>
+        <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.c3p0.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
+
+         <mapping class="application.database.models.User" />
+         <mapping class="application.database.models.Choice" />
+         <mapping class="application.database.models.Chat" />
+         <mapping class="application.database.models.Message" />
+    </session-factory>
+</hibernate-configuration>
