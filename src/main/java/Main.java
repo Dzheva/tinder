@@ -21,7 +21,7 @@ public class Main {
 
         User firstUser = new User("test1", "", "Test 1");
         User secondUser  = new User("test2", "", "Test 2");
-        User thirdUser  = new User("test3", "", "Test 3");
+        User thirdUser  = new User("test33", "", "Test 33");
         database.addEntity(firstUser);
         database.addEntity(secondUser);
         database.addEntity(thirdUser);
