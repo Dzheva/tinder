@@ -19,7 +19,7 @@ public class Main {
     public static void initializeDatabase() {
         Database database = new Database();
 
-        User firstUser = new User("test1", "", "Test 1");
+        User firstUser = new User("test2", "", "Test 1");
         User secondUser  = new User("test2", "", "Test 2");
         User thirdUser  = new User("test3", "", "Test 3");
         database.addEntity(firstUser);
