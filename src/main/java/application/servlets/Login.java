@@ -1,12 +1,12 @@
 package application.servlets;
 
-import application.constants.Template;
+import application.constants.TemplateName;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class Login extends BaseServlet {
     public Login() {
-        super(Template.LOGIN);
+        super(TemplateName.LOGIN);
     }
 
     @Override

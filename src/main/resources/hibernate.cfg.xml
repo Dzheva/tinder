@@ -7,13 +7,13 @@
         <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
         <property name="hibernate.connection.url">jdbc:sqlite:src/main/resources/application.db</property>
         <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.c3p0.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
 
-         <mapping class="application.models.User" />
-         <mapping class="application.models.Choice" />
-         <mapping class="application.models.Chat" />
-         <mapping class="application.models.Message" />
+        <mapping class="application.models.User"/>
+        <mapping class="application.models.Choice"/>
+        <mapping class="application.models.Chat"/>
+        <mapping class="application.models.Message"/>
     </session-factory>
 </hibernate-configuration>

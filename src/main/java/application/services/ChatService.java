@@ -1,6 +1,6 @@
 package application.services;
 
-import application.repository.ChatRepository;
+import application.repositories.ChatRepository;
 import application.models.Chat;
 
 public class ChatService {

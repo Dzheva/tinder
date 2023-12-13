@@ -33,6 +33,8 @@ public class User {
 
     @Override
     public String toString() {
-        return MessageFormat.format("User'{'id={0}, username=''{1}'', password=''{2}'', fullName=''{3}'', imageURL=''{4}'', choices={5}, chats={6}'}'", id, username, password, fullName, imageURL, choices, chats);
+        return MessageFormat.format("User'{'id={0}, username=''{1}'', password=''{2}'', " +
+                        "fullName=''{3}'', imageURL=''{4}'', choices={5}, chats={6}'}'",
+                id, username, password, fullName, imageURL, choices, chats);
     }
 }
