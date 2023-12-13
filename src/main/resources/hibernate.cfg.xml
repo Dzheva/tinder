@@ -11,9 +11,9 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.c3p0.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
 
-         <mapping class="application.database.models.User" />
-         <mapping class="application.database.models.Choice" />
-         <mapping class="application.database.models.Chat" />
-         <mapping class="application.database.models.Message" />
+         <mapping class="application.models.User" />
+         <mapping class="application.models.Choice" />
+         <mapping class="application.models.Chat" />
+         <mapping class="application.models.Message" />
     </session-factory>
 </hibernate-configuration>

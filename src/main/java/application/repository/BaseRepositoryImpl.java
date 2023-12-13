@@ -1,14 +1,17 @@
-package application.database;
+package application.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
-public class Database {
+import java.util.List;
+
+public class BaseRepositoryImpl implements IBaseRepository {
     private final SessionFactory sessionFactory;
 
-    public Database() {
+    public BaseRepositoryImpl() {
         sessionFactory = new Configuration().configure().buildSessionFactory();
     }
 
@@ -24,5 +27,17 @@ public class Database {
         try (Session session = sessionFactory.openSession()) {
             return session.get(entityClass, id);
         }
+    }
+
+    public <T> List<T> getAllEntities(Class<T> entityClass) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "FROM " + entityClass.getName();
+            Query<T> query = session.createQuery(hql, entityClass);
+            return query.list();
+        }
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }
