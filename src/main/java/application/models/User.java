@@ -1,7 +1,8 @@
-package application.database.models;
+package application.models;
 
 import jakarta.persistence.*;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Entity
@@ -28,5 +29,12 @@ public class User {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
+    }
+
+    @Override
+    public String toString() {
+        return MessageFormat.format("User'{'id={0}, username=''{1}'', password=''{2}'', " +
+                        "fullName=''{3}'', imageURL=''{4}'', choices={5}, chats={6}'}'",
+                id, username, password, fullName, imageURL, choices, chats);
     }
 }

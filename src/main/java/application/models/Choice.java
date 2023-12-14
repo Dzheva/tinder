@@ -1,4 +1,4 @@
-package application.database.models;
+package application.models;
 
 import jakarta.persistence.*;
 

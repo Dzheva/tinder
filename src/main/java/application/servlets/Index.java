@@ -1,7 +1,7 @@
 package application.servlets;
 
 import application.constants.ContentType;
-import application.constants.Template;
+import application.constants.TemplateName;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Index extends BaseServlet {
     public Index() {
-        super(Template.INDEX);
+        super(TemplateName.INDEX);
     }
 
     @Override
