@@ -1,6 +1,7 @@
 package application;
 
 import application.servlets.Index;
+import application.servlets.Login;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.DefaultServlet;
@@ -30,6 +31,7 @@ public class WebServer {
         contextHandler.addServlet(createResourcesHolder(), "/static/*");
         contextHandler.setContextPath("/");
         contextHandler.addServlet(new ServletHolder(new Index()), "/");
+        contextHandler.addServlet(new ServletHolder(new Login()), "/login");
         return contextHandler;
     }
 
