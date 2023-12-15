@@ -1,12 +1,17 @@
 import application.WebServer;
-import application.database.Database;
-import application.database.models.Chat;
-import application.database.models.Choice;
-import application.database.models.User;
+import application.models.Chat;
+import application.models.Choice;
+import application.models.Message;
+import application.models.User;
+import application.repositories.Repository;
+import application.services.ChatService;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
         initializeDatabase();
         initializeServer();
@@ -17,21 +22,28 @@ public class Main {
     }
 
     public static void initializeDatabase() {
-        Database database = new Database();
+        Repository repository = new Repository();
 
-        User firstUser = new User("test1", "", "Test 1");
-        User secondUser  = new User("test2", "", "Test 2");
-        User thirdUser  = new User("test3", "", "Test 3");
-        database.addEntity(firstUser);
-        database.addEntity(secondUser);
-        database.addEntity(thirdUser);
+        User firstUser = new User("test1", "password", "Test 1");
+        User secondUser = new User("test2", "password", "Test 2");
+        User thirdUser = new User("test3", "password", "Test 3");
+        repository.addEntities(List.of(firstUser, secondUser, thirdUser));
+        repository.addEntity(new Choice(firstUser, secondUser, "like"));
+        repository.addEntity(new Chat(List.of(firstUser, thirdUser)));
 
-        Choice choice = new Choice(firstUser, secondUser, "like");
-        database.addEntity(choice);
+        User fetchedUser = repository.getEntity(User.class, 1);
+        logger.info(String.valueOf(fetchedUser));
 
-        Chat chat = new Chat(List.of(firstUser, thirdUser));
-        database.addEntity(chat);
-        User fetchedUser = database.getEntity(User.class, 3);
-        System.out.println(fetchedUser.chats.get(0).participants);
+        Chat chat = new Chat(List.of(firstUser, secondUser));
+        chat.messages = List.of(
+                new Message(chat, firstUser, 1702505817, "Hello " + secondUser.fullName),
+                new Message(chat, secondUser, 1702565817, "Hi " + firstUser.fullName),
+                new Message(chat, firstUser, 1702625817, "How are you?"),
+                new Message(chat, secondUser, 1702685817, "I am good, thanks!"));
+        repository.addEntity(chat);
+
+        ChatService chatService = new ChatService();
+        Chat chatBetweenUsers = chatService.getChatBetweenUsers(1, 2);
+        logger.info(String.valueOf(chatBetweenUsers));
     }
 }
