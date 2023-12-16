@@ -10,11 +10,10 @@ import java.util.List;
 public class ChoiceRepository extends Repository{
     public List<Choice> getUserChoices(int userId) {
         try (Session session = getSessionFactory().openSession()) {
-            String hql = "FROM Choice WHERE initiator.id = :userId";
+            String hql = "FROM Choice WHERE initiator.id = :userId AND value = 'Like'";
             Query<Choice> query = session.createQuery(hql, Choice.class);
             query.setParameter("userId", userId);
             return query.list();
         }
     }
-
 }
