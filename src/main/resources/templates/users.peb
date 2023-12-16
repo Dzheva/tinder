@@ -12,16 +12,20 @@
       <div class="row">
         <div class="col-12 col-lg-12 col-md-12 text-center">
           <img src="https://robohash.org/68.186.255.198.png" alt="" class="mx-auto rounded-circle img-fluid">
-          <h3 class="mb-0 text-truncated">User name {{targetUser.name}} </h3>
+          <h3 class="mb-0 text-truncated"> {{fullName}} </h3>
           <br>
         </div>
-        <div class="col-12 col-lg-6">
-          <button type="button" class="btn btn-outline-danger btn-block"><span class="fa fa-times"></span>
+        <form action="users" method="POST">
+        <input class="d-none" name="initiatorId" value="1"/>
+        <input class="d-none" name="targetIndex" value="0"/>
+         <div class="col-12 col-lg-6">
+          <button type="submit" name="choice" value="Dislike" class="btn btn-outline-danger btn-block"><span class="fa fa-times"></span>
             Dislike</button>
         </div>
         <div class="col-12 col-lg-6">
-          <button class="btn btn-outline-success btn-block"><span class="fa fa-heart"></span> Like</button>
+          <button type="submit" name="choice" value="Like" class="btn btn-outline-success btn-block"><span class="fa fa-heart"></span> Like</button>
         </div>
+        </form>
       </div>
     </div>
   </div>

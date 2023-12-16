@@ -1,6 +1,7 @@
 package application;
 
 import application.servlets.Index;
+import application.servlets.LikeUsersServlet;
 import application.servlets.Login;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -32,6 +33,8 @@ public class WebServer {
         contextHandler.setContextPath("/");
         contextHandler.addServlet(new ServletHolder(new Index()), "/");
         contextHandler.addServlet(new ServletHolder(new Login()), "/login");
+        contextHandler.addServlet(new ServletHolder(new LikeUsersServlet()), "/users");
+
         return contextHandler;
     }
 
