@@ -6,7 +6,7 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class UserRepository extends Repository{
+public class UserRepository extends Repository {
     public List<User> getUsersToShow(int userId) {
         try (Session session = getSessionFactory().openSession()) {
             String hql = "FROM User WHERE id != :userId";
@@ -15,5 +15,4 @@ public class UserRepository extends Repository{
             return query.list();
         }
     }
-
 }

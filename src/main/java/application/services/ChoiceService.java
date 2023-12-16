@@ -6,18 +6,17 @@ import application.repositories.ChoiceRepository;
 import java.util.List;
 
 public class ChoiceService {
-    private final ChoiceRepository choiceRepository;
+    private final ChoiceRepository repository;
 
-    public ChoiceService(ChoiceRepository choiceRepository) {
-        this.choiceRepository = choiceRepository;
+    public ChoiceService() {
+        this.repository = new ChoiceRepository();
     }
 
-    public void addChoice(Choice choice){
-        choiceRepository.addEntity(choice);
+    public void addChoice(Choice choice) {
+        repository.addEntity(choice);
     }
 
-    public List<Choice> getUserChoices(int userId){
-        return choiceRepository.getUserChoices(userId);
+    public List<Choice> getUserChoices(int userId) {
+        return repository.getUserChoices(userId);
     }
-
 }

@@ -1,6 +1,5 @@
 import application.WebServer;
 import application.models.Chat;
-import application.models.Choice;
 import application.models.Message;
 import application.models.User;
 import application.repositories.Repository;
@@ -27,8 +26,9 @@ public class Main {
         User firstUser = new User("test1", "password", "Test 1");
         User secondUser = new User("test2", "password", "Test 2");
         User thirdUser = new User("test3", "password", "Test 3");
-        repository.addEntities(List.of(firstUser, secondUser, thirdUser));
-        repository.addEntity(new Choice(firstUser, secondUser, "like"));
+        User fourthUser = new User("test4", "password", "Test 4");
+        User fifthUser = new User("test5", "password", "Test 5");
+        repository.addEntities(List.of(firstUser, secondUser, thirdUser, fourthUser, fifthUser));
         repository.addEntity(new Chat(List.of(firstUser, thirdUser)));
 
         User fetchedUser = repository.getEntity(User.class, 1);

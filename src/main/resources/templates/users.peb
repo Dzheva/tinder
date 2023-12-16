@@ -4,27 +4,27 @@
 <title>Users</title>
 {% endblock %}
 
-
 {% block body %}
-<div class="col-4 offset-4">
+<div class="d-flex flex-grow-1 flex-column align-items-center justify-content-center">
   <div class="card">
     <div class="card-body">
       <div class="row">
         <div class="col-12 col-lg-12 col-md-12 text-center">
-          <img src="https://robohash.org/68.186.255.198.png" alt="" class="mx-auto rounded-circle img-fluid">
-          <h3 class="mb-0 text-truncated"> {{fullName}} </h3>
-          <br>
+          <img src="https://robohash.org/68.186.255.198.png" class="mx-auto rounded-circle img-fluid" alt="Photo" />
+          <h3 class="mb-0 text-truncated">{{ user.fullName }}</h3>
+          <br />
         </div>
-        <form action="users" method="POST">
-        <input class="d-none" name="initiatorId" value="1"/>
-        <input class="d-none" name="targetIndex" value="0"/>
-         <div class="col-12 col-lg-6">
-          <button type="submit" name="choice" value="Dislike" class="btn btn-outline-danger btn-block"><span class="fa fa-times"></span>
-            Dislike</button>
-        </div>
-        <div class="col-12 col-lg-6">
-          <button type="submit" name="choice" value="Like" class="btn btn-outline-success btn-block"><span class="fa fa-heart"></span> Like</button>
-        </div>
+        <form action="/users" method="POST">
+          <div class="d-flex gap-4">
+            <button type="submit" name="choice" value="dislike" class="btn btn-outline-danger btn-block w-100">
+              <span class="fa fa-times"></span>
+              Dislike
+            </button>
+            <button type="submit" name="choice" value="like" class="btn btn-outline-success btn-block w-100">
+              <span class="fa fa-heart"></span>
+              Like
+            </button>
+          </div>
         </form>
       </div>
     </div>

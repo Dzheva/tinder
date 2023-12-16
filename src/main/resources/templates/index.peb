@@ -1,7 +1,0 @@
-{% extends "templates/base.peb" %}
-
-{% block body %}
-<div class="d-flex align-items-center justify-content-center flex-grow-1">
-  <h1>{{ message }}</h1>
-<div>
-{% endblock %}
