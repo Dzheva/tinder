@@ -3,6 +3,7 @@ package application;
 import application.constants.Endpoint;
 import application.filters.GlobalFilter;
 import application.servlets.Index;
+import application.servlets.Likes;
 import application.servlets.Login;
 import application.servlets.Users;
 import jakarta.servlet.DispatcherType;
@@ -42,6 +43,7 @@ public class WebServer {
         contextHandler.addServlet(new ServletHolder(new Index()), Endpoint.INDEX);
         contextHandler.addServlet(new ServletHolder(new Login()), Endpoint.LOGIN);
         contextHandler.addServlet(new ServletHolder(new Users()), Endpoint.USERS);
+        contextHandler.addServlet(new ServletHolder(new Likes()), Endpoint.LIKES);
         return contextHandler;
     }
 
