@@ -42,8 +42,15 @@ public class Users extends BaseServlet {
         HttpSession session = request.getSession(false);
         SessionData sessionData = (SessionData) session.getAttribute("sessionData");
         String choiceValue = request.getParameter("choice");
+        Choice choice = new Choice(sessionData.user, sessionData.usersToShow.get(sessionData.nextUserIndex), choiceValue);
+
+        if(!choiceService.choiceExist(choice)){
+            choiceService.addChoice(choice);
+        }
+
         // TODO: 👉 Remove the previous choice if it exists
-        choiceService.addChoice(new Choice(sessionData.user, sessionData.usersToShow.get(sessionData.nextUserIndex), choiceValue));
+        //choiceService.addChoice(new Choice(sessionData.user, sessionData.usersToShow.get(sessionData.nextUserIndex), choiceValue));
+
         sessionData.nextUserIndex++;
         response.sendRedirect(Endpoint.USERS);
     }

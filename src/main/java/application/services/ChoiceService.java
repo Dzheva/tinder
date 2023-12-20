@@ -19,6 +19,14 @@ public class ChoiceService {
         repository.addEntity(choice);
     }
 
+    public List<Choice> getAllChoices(){
+        return repository.getEntities(Choice.class);
+    }
+
+    public boolean choiceExist(Choice choice){
+        return getAllChoices().contains(choice);
+    }
+
     public List<Choice> getUserChoices(int userId) {
         return repository.getUserChoices(userId);
     }
