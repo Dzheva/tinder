@@ -42,10 +42,14 @@ public class Users extends BaseServlet {
         HttpSession session = request.getSession(false);
         SessionData sessionData = (SessionData) session.getAttribute("sessionData");
         String choiceValue = request.getParameter("choice");
-        Choice choice = new Choice(sessionData.user, sessionData.usersToShow.get(sessionData.nextUserIndex), choiceValue);
+        int initiatorId = sessionData.user.id;
+        int targetId = sessionData.usersToShow.get(sessionData.nextUserIndex).id;
 
-        if(!choiceService.choiceExist(choice)){
+        if(choiceService.getChoiceByUsersId(initiatorId, targetId) == null) {
+            Choice choice = new Choice(sessionData.user, sessionData.usersToShow.get(sessionData.nextUserIndex), choiceValue);
             choiceService.addChoice(choice);
+        } else {
+            choiceService.updateChoiceValue(initiatorId, targetId, choiceValue);
         }
 
         // TODO: 👉 Remove the previous choice if it exists

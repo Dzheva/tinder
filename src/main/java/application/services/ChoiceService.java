@@ -19,13 +19,16 @@ public class ChoiceService {
         repository.addEntity(choice);
     }
 
+
+    /* No longer relevant
     public List<Choice> getAllChoices(){
         return repository.getEntities(Choice.class);
     }
 
     public boolean choiceExist(Choice choice){
         return getAllChoices().contains(choice);
-    }
+        }
+     */
 
     public List<Choice> getUserChoices(int userId) {
         return repository.getUserChoices(userId);
@@ -35,5 +38,13 @@ public class ChoiceService {
         return getUserChoices(userId).stream()
                 .map(choice -> choice.target)
                 .collect(Collectors.toList());
+    }
+
+    public void updateChoiceValue(int userId, int targetId, String newValue){
+        repository.updateChoiceValue(userId, targetId, newValue);
+    }
+
+    public Choice getChoiceByUsersId(int initiatorId, int targetId){
+        return repository.getChoiceByUsersId(initiatorId, targetId);
     }
 }
