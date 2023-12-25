@@ -1,7 +1,7 @@
 {% extends "templates/base.peb" %}
 
 {% block head %}
-<title>Likes</title>
+<title>Liked List</title>
 {% endblock %}
 
 
@@ -100,7 +100,7 @@
 {#{% endblock %}#}
 
 {% block body %}
-<title>Liked List</title>
+<form action="/likes" method="POST">
 <table border="1">
     <thead>
         <tr>
@@ -110,13 +110,14 @@
     </thead>
     <tbody>
         {% for user in likedUsers %}
-            <tr>
+        <tr>    <td><button type="submit" value="{{ user.id}}" name="targetId"> GO </button></td>
                 <td>{{ user.id }}</td>
                 <td>{{ user.fullName }}</td>
-            </tr>
+        </tr>
         {% endfor %}
     </tbody>
 </table>
+</form>
 {% endblock %}
 
 

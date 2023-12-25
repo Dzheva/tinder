@@ -5,6 +5,7 @@ import application.models.User;
 import application.repositories.Repository;
 import application.services.ChatService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -35,11 +36,13 @@ public class Main {
         logger.info(String.valueOf(fetchedUser));
 
         Chat chat = new Chat(List.of(firstUser, secondUser));
-        chat.messages = List.of(
+        chat.messages = new ArrayList<>(List.of(
                 new Message(chat, firstUser, 1702505817, "Hello " + secondUser.fullName),
                 new Message(chat, secondUser, 1702565817, "Hi " + firstUser.fullName),
                 new Message(chat, firstUser, 1702625817, "How are you?"),
-                new Message(chat, secondUser, 1702685817, "I am good, thanks!"));
+                new Message(chat, secondUser, 1702685817, "I am good, thanks!")));
+
+        chat.messages.add(new Message(chat, firstUser, 1702505817, "Test from Ihor " + secondUser.fullName));
         repository.addEntity(chat);
 
         ChatService chatService = new ChatService();

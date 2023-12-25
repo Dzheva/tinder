@@ -50,7 +50,7 @@ public class Likes extends BaseServlet{
         int initiatorId = sessionData.user.id;
         int targetId = Integer.parseInt(request.getParameter("targetId")); //get from UI
         Chat chat = chatService.getChatBetweenUsers(initiatorId, targetId);
-        session.setAttribute("chat", chat); // to get access this chat after the redirect
+        sessionData.chat = chat; // to get access this chat after the redirect
         response.sendRedirect(Endpoint.CHAT);// redirect to chat
     }
 }
