@@ -1,123 +1,27 @@
 {% extends "templates/base.peb" %}
 
+{% macro row(user) %}
+<div class="flex items-center sm:flex-row flex-col py-4 px-8 gap-x-8 w-full mb-2 bg-white shadow-md rounded-lg">
+  <img draggable="false" class="aspect-square w-[72px] sm:w-[48px] object-cover rounded-full" src="{{ user.imageURL }}"
+    alt="Avatar" />
+  <h2 class="text-lg font-semibold">{{ user.fullName }}</h2>
+  <p class="text-[0.9375rem]">@{{ user.username }}</p>
+  <a class="sm:ml-auto sm:mt-0 mt-6 bg-[#3A65FF] text-white py-2 px-4 rounded-full text-sm"
+    href="/messages/{{user.username}}">
+    Open chat
+  </a>
+</div>
+{% endmacro %}
+
 {% block head %}
-<title>Liked List</title>
+<title>Likes</title>
 {% endblock %}
 
 
-{#{% block body %}#}
-{#<div class="container">#}
-{#  <div class="row">#}
-{#    <div class="col-8 offset-2">#}
-{#      <div class="panel panel-default user_panel">#}
-{#        <div class="panel-heading">#}
-{#          <h3 class="panel-title">User List</h3>#}
-{#        </div>#}
-{#        <div class="panel-body">#}
-{#          <div class="table-container">#}
-{#            <table class="table-users table" border="0">#}
-{#              <tbody>#}
-{#                <tr>#}
-{#                  <td width="10">#}
-{#                    <div class="avatar-img">#}
-{#                      <img class="img-circle"#}
-{#                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxhcCYW4QDWMOjOuUTxOd50KcJvK-rop9qE9zRltSbVS_bO-cfWA" />#}
-{#                    </div>#}
-
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Herbert Hoover#}
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Builder Sales Agent#}
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Last Login: 6/10/2017<br><small class="text-muted">5 days ago</small>#}
-{#                  </td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                  <td width="10">#}
-{#                    <div class="avatar-img">#}
-{#                      <img class="img-circle"#}
-{#                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxhcCYW4QDWMOjOuUTxOd50KcJvK-rop9qE9zRltSbVS_bO-cfWA" />#}
-{#                    </div>#}
-
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Herbert Hoover#}
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Builder Sales Agent#}
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Last Login: 6/10/2017<br><small class="text-muted">5 days ago</small>#}
-{#                  </td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                  <td width="10">#}
-{#                    <div class="avatar-img">#}
-{#                      <img class="img-circle"#}
-{#                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxhcCYW4QDWMOjOuUTxOd50KcJvK-rop9qE9zRltSbVS_bO-cfWA" />#}
-{#                    </div>#}
-
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Herbert Hoover#}
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Builder Sales Agent#}
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Last Login: 6/10/2017<br><small class="text-muted">5 days ago</small>#}
-{#                  </td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                  <td width="10">#}
-{#                    <div class="avatar-img">#}
-{#                      <img class="img-circle"#}
-{#                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxhcCYW4QDWMOjOuUTxOd50KcJvK-rop9qE9zRltSbVS_bO-cfWA" />#}
-{#                    </div>#}
-
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Herbert Hoover#}
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Builder Sales Agent#}
-{#                  </td>#}
-{#                  <td class="align-middle">#}
-{#                    Last Login: 6/10/2017<br><small class="text-muted">5 days ago</small>#}
-{#                  </td>#}
-{#                </tr>#}
-{#              </tbody>#}
-{#            </table>#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{#    </div>#}
-{#  </div>#}
-{#</div>#}
-{#{% endblock %}#}
-
-{% block body %}
-<form action="/likes" method="POST">
-<table border="1">
-    <thead>
-        <tr>
-            <td>#id</td>
-            <td>Full Name</td>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in likedUsers %}
-        <tr>    <td><button type="submit" value="{{ user.id}}" name="targetId"> GO </button></td>
-                <td>{{ user.id }}</td>
-                <td>{{ user.fullName }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-</form>
+{% block main %}
+<div class="max-w-2xl w-full">
+  {% for user in users %}
+  {{ row(user) }}
+  {% endfor %}
+</div>
 {% endblock %}
-
-

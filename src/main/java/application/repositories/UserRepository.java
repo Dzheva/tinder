@@ -15,4 +15,13 @@ public class UserRepository extends Repository {
             return query.list();
         }
     }
+
+    public User getUserByUsername(String username) {
+        try (Session session = getSessionFactory().openSession()) {
+            String hql = "FROM User WHERE username = :username";
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("username", username);
+            return query.getSingleResult();
+        }
+    }
 }

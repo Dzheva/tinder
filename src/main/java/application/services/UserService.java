@@ -23,4 +23,8 @@ public class UserService {
     public List<User> getUsersToShow(int id) {
         return repository.getUsersToShow(id);
     }
+
+    public User getUserByUsername(String username) {
+        return repository.getUserByUsername(username);
+    }
 }

@@ -41,7 +41,7 @@ public class WebServer {
         contextHandler.addServlet(new ServletHolder(new Login()), Endpoint.LOGIN);
         contextHandler.addServlet(new ServletHolder(new Users()), Endpoint.USERS);
         contextHandler.addServlet(new ServletHolder(new Likes()), Endpoint.LIKES);
-        contextHandler.addServlet(new ServletHolder(new ChatServlet()), Endpoint.CHAT);
+        contextHandler.addServlet(new ServletHolder(new Messages()), Endpoint.MESSAGES);
         return contextHandler;
     }
 

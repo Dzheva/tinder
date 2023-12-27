@@ -25,10 +25,11 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String fullName) {
+    public User(String username, String password, String fullName, String imageURL) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
+        this.imageURL = imageURL;
     }
 
     @Override

@@ -24,11 +24,16 @@ public class Main {
     public static void initializeDatabase() {
         Repository repository = new Repository();
 
-        User firstUser = new User("test1", "password", "Test 1");
-        User secondUser = new User("test2", "password", "Test 2");
-        User thirdUser = new User("test3", "password", "Test 3");
-        User fourthUser = new User("test4", "password", "Test 4");
-        User fifthUser = new User("test5", "password", "Test 5");
+        User firstUser = new User("test1", "password", "Test 1",
+                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
+        User secondUser = new User("test2", "password", "Test 2",
+                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
+        User thirdUser = new User("test3", "password", "Test 3",
+                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
+        User fourthUser = new User("test4", "password", "Test 4",
+                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
+        User fifthUser = new User("test5", "password", "Test 5",
+                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
         repository.addEntities(List.of(firstUser, secondUser, thirdUser, fourthUser, fifthUser));
         repository.addEntity(new Chat(List.of(firstUser, thirdUser)));
 
@@ -42,7 +47,7 @@ public class Main {
                 new Message(chat, firstUser, 1702625817, "How are you?"),
                 new Message(chat, secondUser, 1702685817, "I am good, thanks!")));
 
-        chat.messages.add(new Message(chat, firstUser, 1702505817, "Test from Ihor " + secondUser.fullName));
+        chat.messages.add(new Message(chat, firstUser, 1702505817, "Test from Ihor, " + secondUser.fullName));
         repository.addEntity(chat);
 
         ChatService chatService = new ChatService();

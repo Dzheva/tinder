@@ -1,0 +1,43 @@
+{% extends "templates/base.peb" %}
+
+{% macro incoming(message) %}
+<div class="bg-green-500 text-white py-2 px-4 text-sm rounded-t-2xl rounded-br-2xl max-w-md">
+  {{ message.text }}
+</div>
+{% endmacro %}
+
+{% macro sent(message) %}
+<div class="bg-[#3A65FF] text-white py-2 px-4 text-sm rounded-t-2xl rounded-bl-2xl max-w-md self-end">
+  {{ message.text }}
+</div>
+{% endmacro %}
+
+{% block head %}
+<title>Messages</title>
+{% endblock %}
+
+{% block main %}
+<div class="max-w-2xl w-full">
+  <div class="flex items-center w-full py-2 px-4 shadow-md bg-white gap-x-4 rounded-tl-lg rounded-tr-lg border-b">
+    <img draggable="false" class="aspect-square w-[36px] object-cover rounded-full" src="{{ target.imageURL }}"
+      alt="Avatar" />
+    <h2 class="text-[1.075rem] font-semibold">{{ target.fullName }}</h2>
+  </div>
+  <div
+    class="px-4 bg-white w-full shadow-md flex flex-col items-start pt-4 gap-y-3 min-h-[128px] max-h-[484px] overflow-auto">
+    {% for message in chat.messages %}
+    {% if message.sender.id == target.id %}
+    {{ incoming(message) }}
+    {% else %}
+    {{ sent(message) }}
+    {% endif %}
+    {% endfor %}
+  </div>
+  <form action="/messages" method="POST"
+    class="text-sm shadow-md bg-white rounded-bl-lg rounded-br-lg w-2xl pb-5 flex px-4 pt-5 gap-x-6">
+    <input name="text" class="w-full border rounded-full outline-none px-6 py-1" type="text" />
+    <button onclick="(event) => event.preventDefault()" type="submit"
+      class="border rounded-full px-4 py-2">Send</button>
+  </form>
+</div>
+{% endblock %}
