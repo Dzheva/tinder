@@ -4,7 +4,7 @@ import application.models.Chat;
 import application.models.User;
 import org.hibernate.Session;
 
-public class ChatRepository extends Repository {
+public final class ChatRepository extends Repository {
     public Chat getChat(User initiator, User target) {
         try (Session session = getSessionFactory().openSession()) {
             String hql = "SELECT chat FROM Chat chat " +

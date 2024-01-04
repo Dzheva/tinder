@@ -41,7 +41,7 @@ public class WebServer {
         Map<String, BaseServlet> servlets = Map.of(
                 Endpoint.INDEX, new Index(), Endpoint.LOGIN, new Login(),
                 Endpoint.USERS, new Users(), Endpoint.LIKES, new Likes(),
-                Endpoint.MESSAGES + "/*", new Messages());
+                Endpoint.LOGOUT, new Logout(), Endpoint.MESSAGES + "/*", new Messages());
         servlets.forEach((endpoint, servlet) ->
                 contextHandler.addServlet(new ServletHolder(servlet), endpoint));
         return contextHandler;

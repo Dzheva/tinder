@@ -3,7 +3,7 @@ package application.services;
 import application.models.Choice;
 import application.repositories.ChoiceRepository;
 
-public class ChoiceService {
+public final class ChoiceService {
     private final ChoiceRepository repository;
 
     public ChoiceService() {

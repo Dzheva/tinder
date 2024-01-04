@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class Utils {
+public class CommonUtils {
     public static <T> String formatList(List<T> list, Function<T, String> mapper) {
         if (list == null || list.isEmpty()) return "[]";
         return list.stream()

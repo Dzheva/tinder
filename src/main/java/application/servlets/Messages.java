@@ -1,6 +1,6 @@
 package application.servlets;
 
-import application.Utils.Utils;
+import application.Utils.CommonUtils;
 import application.constants.Endpoint;
 import application.constants.TemplateName;
 import application.entities.SessionData;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class Messages extends BaseServlet {
+public final class Messages extends BaseServlet {
     private final Pattern pathPattern = Pattern.compile("^/(?<username>[^/]+)$");
     private final ChatService chatService;
     private final UserService userService;
@@ -30,7 +30,7 @@ public class Messages extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         SessionData data = getSessionData(request);
-        String username = Utils.findRegexGroup(pathPattern, request.getPathInfo(), "username");
+        String username = CommonUtils.findRegexGroup(pathPattern, request.getPathInfo(), "username");
         User targetUser = userService.getUser(username);
 
         if (targetUser == null || targetUser.id == data.userId) {

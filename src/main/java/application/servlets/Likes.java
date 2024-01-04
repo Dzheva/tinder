@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class Likes extends BaseServlet {
+public final class Likes extends BaseServlet {
     public Likes() {
         super(TemplateName.LIKES);
     }

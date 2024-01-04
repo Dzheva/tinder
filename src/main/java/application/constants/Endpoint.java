@@ -7,4 +7,5 @@ public final class Endpoint {
     public static final String LIKES = "/likes";
     public static final String MESSAGES = "/messages";
     public static final String STATIC = "/static";
+    public static final String LOGOUT = "/logout";
 }

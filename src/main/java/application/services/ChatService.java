@@ -7,7 +7,7 @@ import application.repositories.ChatRepository;
 
 import java.util.List;
 
-public class ChatService {
+public final class ChatService {
     private final ChatRepository repository;
 
     public ChatService() {

@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import java.text.MessageFormat;
 import java.util.List;
 
-import static application.Utils.Utils.formatList;
+import static application.Utils.CommonUtils.formatList;
 
 @Entity
 @Table(name = "chat")
-public class Chat {
+public final class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;

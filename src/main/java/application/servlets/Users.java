@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-public class Users extends BaseServlet {
+public final class Users extends BaseServlet {
     private final ChoiceService choiceService;
     private final UserService userService;
 

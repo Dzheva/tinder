@@ -6,7 +6,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.MutationQuery;
 import org.hibernate.query.Query;
 
-public class ChoiceRepository extends Repository {
+public final class ChoiceRepository extends Repository {
     public Choice getChoice(int initiatorId, int targetId) {
         try (Session session = getSessionFactory().openSession()) {
             Query<Choice> query = session.createQuery(

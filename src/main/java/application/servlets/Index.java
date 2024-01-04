@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-public class Index extends BaseServlet {
+public final class Index extends BaseServlet {
     public Index() {
         super();
     }
