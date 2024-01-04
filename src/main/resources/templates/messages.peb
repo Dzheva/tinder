@@ -23,7 +23,7 @@
       alt="Avatar" />
     <h2 class="text-[1.075rem] font-semibold">{{ target.fullName }}</h2>
   </div>
-  <div
+  <div id="messages"
     class="px-4 bg-white w-full shadow-md flex flex-col items-start pt-4 gap-y-3 min-h-[128px] max-h-[484px] overflow-auto">
     {% for message in chat.messages %}
     {% if message.sender.id == target.id %}
@@ -33,11 +33,14 @@
     {% endif %}
     {% endfor %}
   </div>
-  <form action="/messages" method="POST"
+  <form action="/messages" method="POST" autocomplete="off"
     class="text-sm shadow-md bg-white rounded-bl-lg rounded-br-lg w-2xl pb-5 flex px-4 pt-5 gap-x-6">
     <input name="text" class="w-full border rounded-full outline-none px-6 py-1" type="text" />
-    <button onclick="(event) => event.preventDefault()" type="submit"
-      class="border rounded-full px-4 py-2">Send</button>
+    <button type="submit" class="border rounded-full px-4 py-2">Send</button>
   </form>
+
+  <script>
+    document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+  </script>
 </div>
 {% endblock %}

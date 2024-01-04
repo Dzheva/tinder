@@ -1,44 +1,61 @@
 package application.servlets;
 
+import application.Utils.Utils;
 import application.constants.Endpoint;
 import application.constants.TemplateName;
 import application.entities.SessionData;
 import application.models.Chat;
 import application.models.Message;
 import application.models.User;
-import application.repositories.Repository;
 import application.services.ChatService;
 import application.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class Messages extends BaseServlet {
+    private final Pattern pathPattern = Pattern.compile("^/(?<username>[^/]+)$");
+    private final ChatService chatService;
+    private final UserService userService;
+
     public Messages() {
         super(TemplateName.MESSAGES);
+        chatService = new ChatService();
+        userService = new UserService();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession(false);
-        SessionData sessionData = (SessionData) session.getAttribute("sessionData");
-        String pathInfo = request.getPathInfo();
-        System.out.println(pathInfo);
-        UserService service = new UserService();
-        User targetUser = service.getUserByUsername(pathInfo.substring(1));
-        Chat chat = new ChatService().getChatBetweenUsers(sessionData.user.id, targetUser.id);
-        if (chat == null) {
-            chat = new Chat(List.of(sessionData.user, targetUser));
-            new Repository().addEntity(chat);
+        SessionData data = getSessionData(request);
+        String username = Utils.findRegexGroup(pathPattern, request.getPathInfo(), "username");
+        User targetUser = userService.getUser(username);
+
+        if (targetUser == null || targetUser.id == data.userId) {
+            response.sendRedirect(Endpoint.LIKES);
+            return;
         }
+        Chat chat = chatService.getChat(data.getUser(), targetUser);
+        data.chatTargetUserId = targetUser.id;
         renderTemplate(response, Map.of("target", targetUser, "chat", chat));
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String text = request.getParameter("text");
+        SessionData data = getSessionData(request);
+        User targetUser = data.getChatTargetUser();
+
+        if (targetUser == null) {
+            response.sendRedirect(Endpoint.LIKES);
+            return;
+        }
+        if (!text.trim().isEmpty()) {
+            Chat chat = chatService.getChat(data.getUser(), targetUser);
+            chatService.createMessage(new Message(chat, data.getUser(), System.currentTimeMillis(), text));
+        }
+        response.sendRedirect("/messages/" + targetUser.username);
     }
 }

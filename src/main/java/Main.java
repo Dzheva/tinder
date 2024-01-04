@@ -3,17 +3,16 @@ import application.models.Chat;
 import application.models.Message;
 import application.models.User;
 import application.repositories.Repository;
-import application.services.ChatService;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Main {
-    private static final Logger logger = Logger.getLogger(Main.class.getName());
-
     public static void main(String[] args) {
-        initializeDatabase();
+        File file = new File(Path.of("src", "main", "resources", "application.db").toString());
+        if (!file.exists()) initializeDatabase();
         initializeServer();
     }
 
@@ -23,22 +22,17 @@ public class Main {
 
     public static void initializeDatabase() {
         Repository repository = new Repository();
-
-        User firstUser = new User("test1", "password", "Test 1",
-                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
-        User secondUser = new User("test2", "password", "Test 2",
-                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
-        User thirdUser = new User("test3", "password", "Test 3",
-                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
-        User fourthUser = new User("test4", "password", "Test 4",
-                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
-        User fifthUser = new User("test5", "password", "Test 5",
-                "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg");
+        User firstUser = new User("tom", "password", "Tom Smith",
+                "https://images.unsplash.com/photo-1474031317822-f51f48735ddd?w=735");
+        User secondUser = new User("williams", "password", "Jane Williams",
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=735");
+        User thirdUser = new User("clark", "password", "Brian Clark",
+                "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?w=735");
+        User fourthUser = new User("barbara", "password", "Barbara Cooper",
+                "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?w=735");
+        User fifthUser = new User("richard", "password", "Richard Rodriguez",
+                "https://images.unsplash.com/photo-1464802686167-b939a6910659?w=735");
         repository.addEntities(List.of(firstUser, secondUser, thirdUser, fourthUser, fifthUser));
-        repository.addEntity(new Chat(List.of(firstUser, thirdUser)));
-
-        User fetchedUser = repository.getEntity(User.class, 1);
-        logger.info(String.valueOf(fetchedUser));
 
         Chat chat = new Chat(List.of(firstUser, secondUser));
         chat.messages = new ArrayList<>(List.of(
@@ -46,12 +40,6 @@ public class Main {
                 new Message(chat, secondUser, 1702565817, "Hi " + firstUser.fullName),
                 new Message(chat, firstUser, 1702625817, "How are you?"),
                 new Message(chat, secondUser, 1702685817, "I am good, thanks!")));
-
-        chat.messages.add(new Message(chat, firstUser, 1702505817, "Test from Ihor, " + secondUser.fullName));
         repository.addEntity(chat);
-
-        ChatService chatService = new ChatService();
-        Chat chatBetweenUsers = chatService.getChatBetweenUsers(1, 2);
-        logger.info(String.valueOf(chatBetweenUsers));
     }
 }

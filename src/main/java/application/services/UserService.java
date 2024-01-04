@@ -12,19 +12,15 @@ public class UserService {
         this.repository = new UserRepository();
     }
 
-    public void addUser(User user) {
-        repository.addEntity(user);
+    public User getUser(String username) {
+        return repository.getUser(username);
     }
 
-    public User getUserById(int id) {
-        return repository.getEntity(User.class, id);
+    public User getUser(String username, String password) {
+        return repository.getUser(username, password);
     }
 
-    public List<User> getUsersToShow(int id) {
-        return repository.getUsersToShow(id);
-    }
-
-    public User getUserByUsername(String username) {
-        return repository.getUserByUsername(username);
+    public List<User> getCarouselUsers(int initiatorId) {
+        return repository.getCarouselUsers(initiatorId);
     }
 }

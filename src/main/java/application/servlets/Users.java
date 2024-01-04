@@ -5,57 +5,40 @@ import application.constants.TemplateName;
 import application.entities.SessionData;
 import application.models.Choice;
 import application.services.ChoiceService;
+import application.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.Map;
 
 public class Users extends BaseServlet {
     private final ChoiceService choiceService;
-
-    public Users(ChoiceService choiceService) {
-        super(TemplateName.USERS);
-        this.choiceService = choiceService;
-    }
+    private final UserService userService;
 
     public Users() {
-        this(new ChoiceService());
+        super(TemplateName.USERS);
+        this.choiceService = new ChoiceService();
+        this.userService = new UserService();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession(false);
-        SessionData sessionData = (SessionData) session.getAttribute("sessionData");
-
-        if (sessionData.nextUserIndex < sessionData.usersToShow.size()) {
-            renderTemplate(response, Map.of("user", sessionData.usersToShow.get(sessionData.nextUserIndex)));
+        SessionData data = getSessionData(request);
+        if (data.carouselUserIndex < data.carouselUsers.size()) {
+            renderTemplate(response, Map.of("user", data.carouselUsers.get(data.carouselUserIndex)));
         } else {
             response.sendRedirect(Endpoint.LIKES);
-            sessionData.nextUserIndex = 0;
+            data.carouselUsers = userService.getCarouselUsers(data.userId);
+            data.carouselUserIndex = 0;
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession(false);
-        SessionData sessionData = (SessionData) session.getAttribute("sessionData");
-        String choiceValue = request.getParameter("choice");
-        int initiatorId = sessionData.user.id;
-        int targetId = sessionData.usersToShow.get(sessionData.nextUserIndex).id;
-
-        if(choiceService.getChoiceByUsersId(initiatorId, targetId) == null) {
-            Choice choice = new Choice(sessionData.user, sessionData.usersToShow.get(sessionData.nextUserIndex), choiceValue);
-            choiceService.addChoice(choice);
-        } else {
-            choiceService.updateChoiceValue(initiatorId, targetId, choiceValue);
-        }
-
-        // TODO: 👉 Remove the previous choice if it exists
-        //choiceService.addChoice(new Choice(sessionData.user, sessionData.usersToShow.get(sessionData.nextUserIndex), choiceValue));
-
-        sessionData.nextUserIndex++;
+        SessionData data = getSessionData(request);
+        String value = request.getParameter("choice");
+        choiceService.addChoice(new Choice(data.getUser(), data.carouselUsers.get(data.carouselUserIndex++), value));
         response.sendRedirect(Endpoint.USERS);
     }
 }

@@ -1,27 +1,34 @@
 package application.repositories;
 
 import application.models.User;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class UserRepository extends Repository {
-    public List<User> getUsersToShow(int userId) {
+    public List<User> getCarouselUsers(int userId) {
         try (Session session = getSessionFactory().openSession()) {
-            String hql = "FROM User WHERE id != :userId";
-            Query<User> query = session.createQuery(hql, User.class);
-            query.setParameter("userId", userId);
-            return query.list();
+            return session.createQuery("FROM User WHERE id != :userId", User.class)
+                    .setParameter("userId", userId).list();
         }
     }
 
-    public User getUserByUsername(String username) {
+    public User getUser(String username) {
         try (Session session = getSessionFactory().openSession()) {
-            String hql = "FROM User WHERE username = :username";
-            Query<User> query = session.createQuery(hql, User.class);
-            query.setParameter("username", username);
-            return query.getSingleResult();
+            return session.createQuery("FROM User WHERE username = :username", User.class)
+                    .setParameter("username", username).getSingleResultOrNull();
+        }
+    }
+
+    public User getUser(String username, String password) {
+        String passwordHash = DigestUtils.sha256Hex(password);
+        try (Session session = getSessionFactory().openSession()) {
+            Query<User> query = session.createQuery(
+                    "FROM User WHERE username = :username AND password = :password", User.class);
+            query.setParameter("username", username).setParameter("password", passwordHash);
+            return query.getSingleResultOrNull();
         }
     }
 }

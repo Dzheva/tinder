@@ -1,11 +1,14 @@
 package application.servlets;
 
 import application.constants.ContentType;
+import application.entities.SessionData;
 import application.exceptions.NoTemplateException;
 import io.pebbletemplates.pebble.PebbleEngine;
 import io.pebbletemplates.pebble.template.PebbleTemplate;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.Map;
@@ -33,5 +36,10 @@ public abstract class BaseServlet extends HttpServlet {
 
     public void renderTemplate(HttpServletResponse response) throws IOException {
         renderTemplate(response, Map.of());
+    }
+
+    public SessionData getSessionData(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        return (SessionData) session.getAttribute("data");
     }
 }

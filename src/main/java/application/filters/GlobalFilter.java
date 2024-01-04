@@ -16,6 +16,7 @@ public final class GlobalFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession(false);
 
+        // TODO: 👉 Add sessions persistence
         if (session != null || requestURI.equals(Endpoint.LOGIN) || requestURI.contains("/static")) {
             chain.doFilter(request, response);
         } else {

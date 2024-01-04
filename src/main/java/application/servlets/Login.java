@@ -10,21 +10,30 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 
 public class Login extends BaseServlet {
+    private final UserService service;
+
     public Login() {
         super(TemplateName.LOGIN);
+        this.service = new UserService();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        UserService service = new UserService();
-        User user = service.getUserById(1);
-        session.setAttribute(
-                "sessionData", new SessionData(user, service.getUsersToShow(user.id), 0));
-        response.sendRedirect(Endpoint.USERS);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        User user = service.getUser(username, password);
+        if (user != null) {
+            List<User> carouselUsers = service.getCarouselUsers(user.id);
+            session.setAttribute("data", new SessionData(user.id, carouselUsers, 0));
+            response.sendRedirect(Endpoint.USERS);
+        } else {
+            response.sendRedirect(Endpoint.LOGIN);
+        }
     }
 
     @Override

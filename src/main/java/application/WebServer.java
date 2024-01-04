@@ -12,6 +12,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import java.util.EnumSet;
+import java.util.Map;
 
 public class WebServer {
     private final Server server;
@@ -36,12 +37,13 @@ public class WebServer {
         contextHandler.setContextPath("/");
         contextHandler.addFilter(
                 new FilterHolder(new GlobalFilter()), "/*", EnumSet.of(DispatcherType.REQUEST));
-        contextHandler.addServlet(createResourcesHolder(), "/static/*");
-        contextHandler.addServlet(new ServletHolder(new Index()), Endpoint.INDEX);
-        contextHandler.addServlet(new ServletHolder(new Login()), Endpoint.LOGIN);
-        contextHandler.addServlet(new ServletHolder(new Users()), Endpoint.USERS);
-        contextHandler.addServlet(new ServletHolder(new Likes()), Endpoint.LIKES);
-        contextHandler.addServlet(new ServletHolder(new Messages()), Endpoint.MESSAGES);
+        contextHandler.addServlet(createResourcesHolder(), Endpoint.STATIC + "/*");
+        Map<String, BaseServlet> servlets = Map.of(
+                Endpoint.INDEX, new Index(), Endpoint.LOGIN, new Login(),
+                Endpoint.USERS, new Users(), Endpoint.LIKES, new Likes(),
+                Endpoint.MESSAGES + "/*", new Messages());
+        servlets.forEach((endpoint, servlet) ->
+                contextHandler.addServlet(new ServletHolder(servlet), endpoint));
         return contextHandler;
     }
 

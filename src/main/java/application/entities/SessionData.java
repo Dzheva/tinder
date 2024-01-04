@@ -1,30 +1,28 @@
 package application.entities;
 
-import application.models.Chat;
 import application.models.User;
+import application.repositories.Repository;
 
 import java.util.List;
 
 public final class SessionData {
-    public final User user;
-    public final List<User> usersToShow;
-    public int nextUserIndex;
+    public final int userId;
+    public List<User> carouselUsers;
+    public int carouselUserIndex;
+    public int chatTargetUserId;
 
-    public Chat chat;
-
-    public SessionData(User user, List<User> usersToShow, int nextUserIndex) {
-        this.user = user;
-        this.usersToShow = usersToShow;
-        this.nextUserIndex = nextUserIndex;
-        this.chat = null;
+    public SessionData(int userId, List<User> carouselUsers, int carouselUserIndex) {
+        this.userId = userId;
+        this.carouselUsers = carouselUsers;
+        this.carouselUserIndex = carouselUserIndex;
     }
 
-    @Override
-    public String toString() {
-        return "SessionData{" +
-                "user=" + user +
-                ", usersToShow=" + usersToShow +
-                ", nextUserIndex=" + nextUserIndex +
-                '}';
+    public User getUser() {
+        return new Repository().getEntity(User.class, userId);
+    }
+
+    public User getChatTargetUser() {
+        if (chatTargetUserId == 0) return null;
+        return new Repository().getEntity(User.class, chatTargetUserId);
     }
 }

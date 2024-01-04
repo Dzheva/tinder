@@ -1,6 +1,7 @@
 package application.models;
 
 import jakarta.persistence.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -11,6 +12,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
+    @Column(unique = true)
     public String username;
     public String password;
     @Column(name = "full_name")
@@ -27,9 +29,9 @@ public class User {
 
     public User(String username, String password, String fullName, String imageURL) {
         this.username = username;
-        this.password = password;
         this.fullName = fullName;
         this.imageURL = imageURL;
+        this.password = DigestUtils.sha256Hex(password);
     }
 
     @Override
