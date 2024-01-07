@@ -4,20 +4,22 @@
 <title>Users</title>
 {% endblock %}
 
-{% block main %}
+{% block content %}
+{% include "templates/navigation.peb" %}
 <div
-  class="bg-white shadow-md flex flex-col py-8 justify-center min-w-full items-center max-w-lg md:min-w-[448px] rounded-lg md:px-12">
-  <img draggable="false" class="aspect-square w-[196px] object-cover rounded-full mb-4" src="{{ user.imageURL }}"
-    alt="Avatar" />
-  <h1 class="font-semibold text-[1.75rem] leading-8">{{ user.fullName }}</h1>
+  class="flex w-full max-w-md flex-col items-center justify-center rounded-xl bg-gray-50 px-6 py-8 sm:aspect-square sm:min-w-[448px] sm:px-12">
+  <img draggable="false" width="196" height="196"
+    class="mb-4 aspect-square rounded-full object-cover text-center leading-[196px]" src="{{ user.imageURL }}"
+    alt="User photo" />
+  <h1 class="text-[1.75rem] font-semibold leading-8">{{ user.fullName }}</h1>
   <p>@{{ user.username }}</p>
-  <form action="/users" method="POST" class="flex w-full flex-col gap-x-5 gap-y-2 px-10 mt-8 md:flex-row md:px-2">
+  <form action="/users" method="POST" class="mt-8 flex w-full flex-col-reverse gap-x-5 gap-y-2 sm:flex-row sm:px-4">
     <button name="choice" type="submit" value="dislike"
-      class="grow border rounded-full p-3 w-full active:scale-[0.925] transition-transform">
+      class="mx-auto w-full max-w-xs grow rounded-full border-2 border-white bg-amber-400 p-3 text-[0.925rem] shadow-md transition-transform active:scale-[0.925]">
       Dislike
     </button>
     <button name="choice" type="submit" value="like"
-      class="grow border rounded-full p-3 w-full active:scale-[0.925] transition-transform">
+      class="mx-auto w-full max-w-xs grow rounded-full border-2 border-white bg-lime-400 p-3 text-[0.925rem] shadow-md transition-transform active:scale-[0.925]">
       Like
     </button>
   </form>

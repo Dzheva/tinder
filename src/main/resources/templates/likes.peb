@@ -1,14 +1,18 @@
 {% extends "templates/base.peb" %}
 
 {% macro row(user) %}
-<div class="flex items-center sm:flex-row flex-col py-4 px-8 gap-x-8 w-full mb-2 bg-white shadow-md rounded-lg">
-  <img draggable="false" class="aspect-square w-[72px] sm:w-[48px] object-cover rounded-full" src="{{ user.imageURL }}"
-    alt="Avatar" />
-  <h2 class="text-lg font-semibold sm:min-w-60">{{ user.fullName }}</h2>
-  <p class="text-[0.9375rem]">@{{ user.username }}</p>
-  <a class="sm:ml-auto sm:mt-0 mt-6 bg-[#3A65FF] text-white py-2 px-4 rounded-full text-sm"
-    href="/messages/{{user.username}}">
-    Open chat
+<div
+  class="inline-flex flex-col items-center justify-center gap-x-8 rounded-lg border border-gray-100 bg-white px-4 py-6 shadow-md sm:aspect-auto sm:w-full md:flex-row md:px-8 md:py-4">
+  <img draggable="false"
+    class="mb-4 aspect-square w-[72px] rounded-full border-2 border-white object-cover text-center text-xs leading-[68px] shadow-md md:mb-0 md:w-[48px] md:leading-[30px]"
+    src="{{ user.imageURL }}" alt="Photo" />
+  <h2 class="text-center text-lg font-semibold leading-6 md:min-w-52 md:text-left">
+    {{ user.fullName }}
+  </h2>
+  <p class="text-sm">@{{ user.username }}</p>
+  <a href="/messages/{{user.username}}"
+    class="mt-6 rounded-full border-2 border-white bg-amber-300 px-5 py-2 text-xs shadow-md md:ml-auto md:mt-0 md:px-4">
+    Message
   </a>
 </div>
 {% endmacro %}
@@ -17,10 +21,13 @@
 <title>Likes</title>
 {% endblock %}
 
-{% block main %}
-<div class="max-w-2xl w-full">
-  {% for user in users %}
-  {{ row(user) }}
-  {% endfor %}
+{% block content %}
+{% include "templates/navigation.peb" %}
+<div class="flex w-full max-w-md flex-col rounded-lg bg-gray-50 py-2 md:max-w-xl md:gap-2">
+  <div class="flex max-h-[548px] flex-col gap-4 overflow-auto px-2">
+    {% for user in users %}
+    {{ row(user) }}
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

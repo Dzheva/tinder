@@ -1,30 +1,38 @@
 {% extends "templates/base.peb" %}
 
 {% macro incoming(message) %}
-<div class="bg-green-500 text-white py-2 px-4 text-sm rounded-t-2xl rounded-br-2xl max-w-md">
+<div class="max-w-md rounded-t-2xl rounded-br-2xl bg-emerald-200 px-4 py-2 text-sm shadow-md">
   {{ message.text }}
 </div>
 {% endmacro %}
 
 {% macro sent(message) %}
-<div class="bg-[#3A65FF] text-white py-2 px-4 text-sm rounded-t-2xl rounded-bl-2xl max-w-md self-end">
+<div class="max-w-md self-end rounded-t-2xl rounded-bl-2xl bg-cyan-200 px-4 py-2 text-sm shadow-md">
   {{ message.text }}
 </div>
 {% endmacro %}
 
 {% block head %}
 <title>Messages</title>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("messages");
+    container.scrollTop = container.scrollHeight;
+    document.getElementById("input").focus();
+  });
+</script>
 {% endblock %}
 
-{% block main %}
-<div class="max-w-2xl w-full">
-  <div class="flex items-center w-full py-2 px-4 shadow-md bg-white gap-x-4 rounded-tl-lg rounded-tr-lg border-b">
-    <img draggable="false" class="aspect-square w-[36px] object-cover rounded-full" src="{{ target.imageURL }}"
-      alt="Avatar" />
+{% block content %}
+{% include "templates/navigation.peb" %}
+<div class="w-full max-w-2xl">
+  <div class="sticky z-10 flex w-full items-center gap-x-4 rounded-tl-lg rounded-tr-lg bg-white px-4 py-2 shadow-md">
+    <img draggable="false" class="aspect-square w-[36px] rounded-full object-cover text-center text-sm leading-[36px]"
+      src="{{ target.imageURL }}" alt="Avatar" />
     <h2 class="text-[1.075rem] font-semibold">{{ target.fullName }}</h2>
   </div>
   <div id="messages"
-    class="px-4 bg-white w-full shadow-md flex flex-col items-start pt-4 gap-y-3 min-h-[128px] max-h-[484px] overflow-auto">
+    class="flex max-h-[484px] min-h-[484px] w-full flex-col items-start gap-y-3 overflow-auto bg-gray-50 px-4 py-2">
     {% for message in chat.messages %}
     {% if message.sender.id == target.id %}
     {{ incoming(message) }}
@@ -34,13 +42,12 @@
     {% endfor %}
   </div>
   <form action="/messages" method="POST" autocomplete="off"
-    class="text-sm shadow-md bg-white rounded-bl-lg rounded-br-lg w-2xl pb-5 flex px-4 pt-5 gap-x-6">
-    <input name="text" class="w-full border rounded-full outline-none px-6 py-1" type="text" />
-    <button type="submit" class="border rounded-full px-4 py-2">Send</button>
+    class="w-2xl sticky flex gap-x-6 rounded-bl-lg rounded-br-lg border border-gray-100 bg-slate-50 px-4 py-4 text-sm">
+    <input id="input" type="text" name="text"
+      class="w-full rounded-full border border-gray-100 px-6 py-1 shadow-lg outline-none" />
+    <button type="submit" class="rounded-full border border-gray-100 bg-white px-4 py-2 shadow-lg">
+      Send
+    </button>
   </form>
-
-  <script>
-    document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
-  </script>
 </div>
 {% endblock %}

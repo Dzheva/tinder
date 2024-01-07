@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="/static/styles.css">
   {% block head %}{% endblock %}
 </head>
-<body>
-  <main class="flex min-h-screen flex-col items-center justify-center bg-gray-50 py-12">
-    {% block main %}{% endblock %}
+<body class="bg-neutral-800">
+  <main class="flex min-h-screen">
+    <div class="mx-auto flex max-w-screen-lg grow flex-col items-center justify-center p-4 sm:px-8">
+      {% block content %}{% endblock %}
+    </div>
   </main>
 </body>
 </html>
